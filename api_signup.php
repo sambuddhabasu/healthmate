@@ -6,7 +6,7 @@ $headers = array(
 	"X-Parse-Application-Id: ILpd42UJgjIz3RcVo0tRNkVCykkk3L2wrPau4yqK",
 	"X-Parse-REST-API-Key: nOfAPyuNWiyYZlLaUs3CiVooXWRpCuDXcIypTezl"
 	);
-$postField = '{"Fname": "' . $_GET['first_name'] . '", "Lname": "' . $_GET['last_name'] . '", "email": "' . $_GET['email'] . '", "username": "' . $_GET['email'] . '", "password": "' . md5($_GET['password']) . '", "gender": "' . $_GET['gender'] . '", "userType": "' . $_GET['user_type'] . '"}';
+$postField = '{"Fname": "' . $_GET['first_name'] . '", "Lname": "' . $_GET['last_name'] . '", "email": "' . $_GET['email'] . '", "username": "' . $_GET['email'] . '", "password": "' . md5($_GET['password']) . '", "gender": "' . $_GET['gender'] . '", "userType": "' . $_GET['user_type'] . '", "phone": "' . $_GET['phone'] . '"}';
 $rest = curl_init();
 curl_setopt($rest, CURLOPT_URL, $PARSE_URL . "users");
 curl_setopt($rest, CURLOPT_CUSTOMREQUEST, "POST");
@@ -21,11 +21,12 @@ if(isset($response->error)) {
 }
 else {
 	if($_GET['user_type'] == "Doctor") {
+		$postFieldDoctor = '{"Fname": "' . $_GET['first_name'] . '", "Lname": "' . $_GET['last_name'] . '", "email": "' . $_GET['email'] . '", "username": "' . $_GET['email'] . '", "password": "' . md5($_GET['password']) . '", "gender": "' . $_GET['gender'] . '", "userType": "' . $_GET['user_type'] . '", "phone": "' . $_GET['phone'] . '", "doctor_id": "' . $response->objectId . '"}';
 		$url = $PARSE_URL . "classes/Doctor";
 		$newRest = curl_init();
 		curl_setopt($newRest, CURLOPT_URL, $url);
 		curl_setopt($newRest, CURLOPT_CUSTOMREQUEST, "POST");
-		curl_setopt($newRest, CURLOPT_POSTFIELDS, $postField);
+		curl_setopt($newRest, CURLOPT_POSTFIELDS, $postFieldDoctor);
 		curl_setopt($newRest, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($newRest, CURLOPT_RETURNTRANSFER, true);
 		$newResponse = curl_exec($newRest);
@@ -33,11 +34,12 @@ else {
 		echo "1";
 	}
 	else if($_GET['user_type'] == "Patient") {
+		$postFieldPatient = '{"Fname": "' . $_GET['first_name'] . '", "Lname": "' . $_GET['last_name'] . '", "email": "' . $_GET['email'] . '", "username": "' . $_GET['email'] . '", "password": "' . md5($_GET['password']) . '", "gender": "' . $_GET['gender'] . '", "userType": "' . $_GET['user_type'] . '", "phone": "' . $_GET['phone'] . '", "patient_id" : "' . $response->objectId . '"}';
 		$url = $PARSE_URL . "classes/Patient";
 		$newRest = curl_init();
 		curl_setopt($newRest, CURLOPT_URL, $url);
 		curl_setopt($newRest, CURLOPT_CUSTOMREQUEST, "POST");
-		curl_setopt($newRest, CURLOPT_POSTFIELDS, $postField);
+		curl_setopt($newRest, CURLOPT_POSTFIELDS, $postFieldPatient);
 		curl_setopt($newRest, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($newRest, CURLOPT_RETURNTRANSFER, true);
 		$newResponse = curl_exec($newRest);

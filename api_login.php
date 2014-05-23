@@ -45,6 +45,14 @@ for ($i=0; $i<$count_patient; $i++) {
 	if($patientResponse->results[$i]->email == $_GET['email'] && $patientResponse->results[$i]->password == md5($_GET['password'])) {
 		$is_patient = 1;
 		$_SESSION['first_name'] = $patientResponse->results[$i]->Fname;
+		$_SESSION['object_id'] = $patientResponse->results[$i]->objectId;
+		if($patientResponse->results[$i]->allergy == "") {
+			$_SESSION['allergy_present'] = 0;
+		}
+		else {
+			$_SESSION['allergy_present'] = 1;
+			$_SESSION['allergy'] = $patientResponse->results[$i]->allergy;
+		}
 		break;
 	}
 }

@@ -61,6 +61,10 @@ require_once('header.php');
 	</div>
 </div>
 <div class="form-group">
+  <label class="control-label" for="inputDefault">Phone Number</label>
+  <input type="text" class="form-control" id="phone" name="phone">
+</div>
+<div class="form-group">
 <button type="button" class="btn btn-primary" onClick="signup();">SignUp</button>
 </div>
 </form>
@@ -78,7 +82,8 @@ require_once('header.php');
 	    var password = document.getElementById('password').value;
 	    var gender = document.getElementById('gender').value;
 	    var user_type = document.getElementById('user_type').value;
-		xhr.open("GET", "<?php echo $ROOT_URL; ?>" + "api_signup.php?first_name=" + first_name + "&last_name=" + last_name + "&email=" + email + "&password=" + password + "&gender=" + gender + "&user_type=" + user_type, true);
+	    var phone = document.getElementById('phone').value;
+		xhr.open("GET", "<?php echo $ROOT_URL; ?>" + "api_signup.php?first_name=" + first_name + "&last_name=" + last_name + "&email=" + email + "&password=" + password + "&gender=" + gender + "&user_type=" + user_type + "&phone=" + phone, true);
 		xhr.onreadystatechange = function() {
 		  if (xhr.readyState == 4) {
 		    // JSON.parse does not evaluate the attacker's scripts.
