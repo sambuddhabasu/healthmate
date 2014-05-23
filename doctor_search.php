@@ -12,6 +12,23 @@ require_once('include.php');
 <?php
 require_once('header.php');
 ?>
+
+<div class="row">
+<div class="col-md-3"></div>
+<div class="col-md-6">
+
+<div class="form-group">
+  <input type="text" class="form-control" id="search" name="search">
+</div>
+
+</div>
+<div class="col-md-3">
+
+<button type="button" class="btn btn-primary" onClick="search();">Search</button>
+
+</div>
+</div>
+
 <div class="row">
 <div class="col-md-3"></div>
 <div class="col-md-6">
@@ -55,6 +72,11 @@ for ($x=0; $x<sizeof($results); $x++) {
 </div>
 <div class="col-md-3"></div>
 </div>
-
+<script>
+function search() {
+	var search_string = document.getElementById('search').value;
+	window.location.href = "<?php echo $ROOT_URL; ?>" + "doctor_search.php";
+}
+</script>
 </body>
 </html>
