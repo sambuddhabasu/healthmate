@@ -82,7 +82,9 @@ require_once('header.php');
 		xhr.onreadystatechange = function() {
 		  if (xhr.readyState == 4) {
 		    // JSON.parse does not evaluate the attacker's scripts.
-		    console.log(xhr.responseText);
+		    if(xhr.responseText == 1) {
+		    	window.location.href = "<?php echo $ROOT_URL; ?>" + "index.php";
+		    }
 		  }
 		}
 		xhr.send();

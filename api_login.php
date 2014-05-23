@@ -30,6 +30,7 @@ for ($i=0; $i<$count_doctor; $i++) {
   if($doctorResponse->results[$i]->email == $_GET['email'] && $doctorResponse->results[$i]->password == md5($_GET['password'])) {
 		$is_doctor = 1;
 		$_SESSION['first_name'] = $doctorResponse->results[$i]->Fname;
+		$_SESSION['object_id'] = $doctorResponse->results[$i]->objectId;
 		if($doctorResponse->results[$i]->category == "") {
 			$_SESSION['category_present'] = 0;
 		}

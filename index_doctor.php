@@ -25,11 +25,53 @@ require_once('header.php');
 if($_SESSION['category_present'] == 0) {
 ?>
 <div class="row">
-	
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+		<h3>Please complete your profile</h3>
+		<form>
+			<div class="form-group">
+		    <label class="control-label" for="inputDefault">Specialised In</label>
+		    <input type="text" class="form-control" id="category" name="category">
+			</div>
+			<div class="form-group">
+		    <label class="control-label" for="inputDefault">Hospital Name</label>
+		    <input type="text" class="form-control" id="hospital" name="hospital">
+			</div>
+			<div class="form-group">
+				<button type="button" class="btn btn-primary" onClick="complete();">Complete</button>
+			</div>
+		</form>
+	</div>
+	<div class="col-md-3"></div>
+</div>
+<?php
+}
+else {
+?>
+<div class="row">
+<div class="col-md-3"></div>
+<div class="col-md-6">
+<p>Completed your profile</p>
+</div>
+<div class="col-md-3"></div>
 </div>
 <?php
 }
 ?>
-
+<script>
+function complete() {
+	var category = document.getElementById('category').value;
+	var hospital = document.getElementById('hospital').value;
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "<?php echo $ROOT_URL; ?>" + "api_doctor_complete_profile.php?category=" + category + "&hospital=" + hospital, true);
+		xhr.onreadystatechange = function() {
+		  if (xhr.readyState == 4) {
+		    // JSON.parse does not evaluate the attacker's scripts.
+		    window.location.href = "<?php echo $ROOT_URL; ?>" + "index_doctor.php";
+		  }
+		}
+		xhr.send();
+}
+</script>
 </body>
 </html>
