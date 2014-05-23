@@ -13,69 +13,83 @@ require_once('include.php');
 require_once('header.php');
 ?>
 
-<div class="row">
-<div class="col-md-3"></div>
-<div class="col-md-6">
-
-<div class="form-group">
-  <input type="text" class="form-control" id="search" name="search">
-</div>
-
-</div>
-<div class="col-md-3">
-
-<button type="button" class="btn btn-primary" onClick="search();">Search</button>
-
-</div>
-</div>
 
 <div class="row">
-<div class="col-md-3"></div>
-<div class="col-md-6">
-	<h1>Showing all the doctors</h1>
+	<div class="col-md-3"></div>
+	<div class="col-md-2">
+		<h4>Doctors near</h4>
+	</div>
+	<div class="col-md-4">
+		<input type="text" class="form-control" id="near" name="near">
+	</div>
+	<div class="col-md-3"></div>
 </div>
-<div class="col-md-3"></div>
+<div class="row">
+	<div class="col-md-3"></div>
+	<div class="col-md-2">
+		<h4>specialised in</h4>
+	</div>
+	<div class="col-md-4">
+		<input type="text" class="form-control" id="category" name="category">
+	</div>
+	<div class="col-md-3"></div>
+</div>
+<div class="row">
+	<div class="col-md-3"></div>
+	<div class="col-md-2">
+		<h4>available at</h4>
+	</div>
+	<div class="col-md-4">
+		<input type="text" class="form-control" id="free" name="free">
+	</div>
+	<div class="col-md-3"></div>
+</div>
+<div class="row">
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+		<button type="button" class="btn btn-primary" onClick="search();">Search</button>
+	</div>
+	<div class="col-md-3"></div>
+</div>
+
+<br>
+
+<div class="row">
+	<div class="col-md-3"></div>
+	<div class="col-md-6" id="main_message">
+	</div>
+	<div class="col-md-3"></div>
 </div>
 
 <div class="row">
-<div class="col-md-3"></div>
-<div class="col-md-6">
-<?php
-$headers = array(
-	"Content-Type: application/json",
-	"X-Parse-Application-Id: ILpd42UJgjIz3RcVo0tRNkVCykkk3L2wrPau4yqK",
-	"X-Parse-REST-API-Key: nOfAPyuNWiyYZlLaUs3CiVooXWRpCuDXcIypTezl"
-	);
-$rest = curl_init();
-curl_setopt($rest, CURLOPT_URL, $PARSE_URL . "classes/Doctor");
-curl_setopt($rest, CURLOPT_CUSTOMREQUEST, "GET");
-curl_setopt($rest, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($rest, CURLOPT_RETURNTRANSFER, true);
-$response = curl_exec($rest);
-$response = json_decode($response);
-curl_close($rest);
-$results = $response->results;
-for ($x=0; $x<sizeof($results); $x++) {
-	if(isset($results[$x]->hospital)) {
-?>
-
-<a href="<?php echo $ROOT_URL . 'doctor_profile.php?id=' . $results[$x]->objectId; ?>"><h3><?php echo $results[$x]->Fname . " " . $results[$x]->Lname; ?></h3></a>
-<h5>Speciality: <?php echo $results[$x]->category; ?></h5>
-<h5>Hospital: <?php echo $results[$x]->hospital; ?></h5>
-<hr>
-
-<?php
-	}
-}
-?>
-
+	<div class="col-md-3"></div>
+	<div class="col-md-6" id="main_contents">
+	</div>
+	<div class="col-md-3"></div>
 </div>
-<div class="col-md-3"></div>
-</div>
+
+
 <script>
 function search() {
-	var search_string = document.getElementById('search').value;
-	window.location.href = "<?php echo $ROOT_URL; ?>" + "doctor_search.php";
+	var near = document.getElementById('near').value;
+	var category = document.getElementById('category').value;
+	var free = document.getElementById('free').value;
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "<?php echo $ROOT_URL; ?>" + "api_doctor_search.php?near=" + near + "&category=" + category + "&free=" + free, true);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4) {
+			results = JSON.parse(xhr.responseText);
+			response = "<div id='row'>";
+			for(i=0;i<results.length;i++) {
+				response += '<h2><a href="<?php echo $ROOT_URL; ?>doctor_profile.php?id=' + results[i].objectId + '">' + results[i].Fname + ' ' + results[i].Lname + '</a></h2><h4>Specialised in: ' + results[i].category + '</h4><h4>Works for: ' + results[i].hospital + '</h4></div><hr><div id="row">';
+				console.log(results[i]);
+			}
+			response += "</div>";
+			document.getElementById('main_contents').innerHTML = response;
+			document.getElementById('main_message').innerHTML = "<h1>Showing you all the results</h1>";
+		}
+	}
+	xhr.send();
 }
 </script>
 </body>

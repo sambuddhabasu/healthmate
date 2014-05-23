@@ -41,7 +41,7 @@ require_once('header.php');
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
-			<h4>Works for <?php echo $response->hospital; ?> hospital</h4>
+			<h4>Works for: <?php echo $response->hospital; ?> hospital</h4>
 		</div>
 		<div class="col-md-3"></div>
 	</div>

@@ -52,21 +52,9 @@ if($_SESSION['allergy_present'] == 0) {
 }
 else {
 ?>
-<div class="row">
-<div class="col-md-3"></div>
-<div class="col-md-6">
 
-<div class="form-group">
-  <input type="text" class="form-control" id="search" name="search">
-</div>
 
-</div>
-<div class="col-md-3">
 
-<button type="button" class="btn btn-primary" onClick="search();">Search</button>
-
-</div>
-</div>
 <?php
 }
 ?>
@@ -108,11 +96,6 @@ function complete() {
 	  }
 	}
 	xhr.send();
-}
-
-function search() {
-	var search_string = document.getElementById('search').value;
-	window.location.href = "<?php echo $ROOT_URL; ?>" + "doctor_search.php";
 }
 </script>
 </body>

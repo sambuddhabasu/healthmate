@@ -9,6 +9,15 @@
   </div>
   <div class="navbar-collapse collapse navbar-inverse-collapse">
     <ul class="nav navbar-nav">
+      <?php
+      if($_SESSION['is_logged'] == 1) {
+        if($_SESSION['user_type'] == 2) {
+      ?>
+      <li><a href="<?php echo $ROOT_URL . 'doctor_search.php'; ?>">Search</a></li>
+      <?php
+        }
+      }
+      ?>
       <li><a href="#">Contact Us</a></li>
       <!--li><a href="#">Link</a></li>
       <li class="dropdown">
