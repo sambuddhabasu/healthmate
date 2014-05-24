@@ -43,8 +43,17 @@ $myLng = (float)$locationResponse->results[0]->geometry->location->lng;
 }
 
 
-
 $results = $response->results;
+
+if($_GET['category'] != "") {
+    $check = $results;
+    $results = array();
+    for($i=0;$i<count($check);$i++) {
+        if(strtolower($check[$i]->category) == strtolower($_GET['category'])) {
+            array_push($results, $check[$i]);
+        }
+    }
+}
 
 function bubble_sort($arr) {
     global $myLat, $myLng;

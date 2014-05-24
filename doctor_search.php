@@ -46,10 +46,12 @@ require_once('header.php');
 </div>
 <div class="row">
 	<div class="col-md-3"></div>
-	<div class="col-md-6">
+	<div class="col-md-3">
 		<button type="button" class="btn btn-primary" onClick="search();">Search</button>
 	</div>
-	<div class="col-md-3"></div>
+	<div class="col-md-3">
+		<img id="loading" />
+	</div>
 </div>
 
 <br>
@@ -71,6 +73,8 @@ require_once('header.php');
 
 <script>
 function search() {
+	document.getElementById('loading').src = "<?php echo $ROOT_URL; ?>" + "static/images/loading.gif";
+	document.getElementById('loading').width = "50";
 	var near = document.getElementById('near').value;
 	var category = document.getElementById('category').value;
 	var free = document.getElementById('free').value;
@@ -78,6 +82,7 @@ function search() {
 	xhr.open("GET", "<?php echo $ROOT_URL; ?>" + "api_doctor_search.php?near=" + near + "&category=" + category + "&free=" + free, true);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4) {
+			document.getElementById('loading').src = "";
 			results = JSON.parse(xhr.responseText);
 			response = "<div id='row'>";
 			for(i=0;i<results.length;i++) {
