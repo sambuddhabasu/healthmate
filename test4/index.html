@@ -1,20 +1,8 @@
-<?php
-session_start();
-require_once('include.php');
-if($_SESSION['is_logged'] == 1) {
-	if($_SESSION['user_type'] == 1) {
-		header("Location: " . $ROOT_URL . "index_doctor.php");
-	}
-	else if($_SESSION['user_type'] == 2) {
-		header("Location: " . $ROOT_URL . "index_patient.php");
-	}
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title><?php echo $APP_NAME; ?></title>
+<title>Bootstrappage Apps</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css">
 <link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.css" type="text/css">
@@ -80,12 +68,14 @@ if($_SESSION['is_logged'] == 1) {
 				<h1>Reach Your Nearest Doctor With A Mobile App</h1>
 				<h3>But wait! Theres more to it !</h3>
 						
-				<div class="freeBtnWrapper">
-					<a class="sublimeBtn" href="<?php echo $ROOT_URL; ?>login.php" title="">Log In</a>
-				</div>	
+				<div class="gallery">
+				<a  class="rounded" href="http://youtu.be/eWtBma5dnlg" rel="prettyPhoto" title="YouTube demo">
+					<span> <i class="icon-play"></i> </span>
+				</a>
+				</div> 
 				<br>
 				<div class="freeBtnWrapper">
-					<a class="sublimeBtn" href="<?php echo $ROOT_URL; ?>signup.php" title="">Sign Up</a>
+					<a class="sublimeBtn" href="healthmate/signup.php" title="">Sign Up</a>
 				</div>			
 			</div>
 		</div>
@@ -436,7 +426,10 @@ if($_SESSION['is_logged'] == 1) {
 	</div>
 	<div class="footerMenu">
 	<div class="container">
-	<span class="pull-right"><?php echo $APP_NAME; ?></span>
+	<a href="#" title=""> News</a> |
+	<a href="#" title=""> Home</a> |
+	<a href="#" title=""> Marketplace</a>
+	<span class="pull-right">Copyright 2011-2014 Surya Web Solution Ltd.</span>
 	</div>
 	</div> 
 	</footer>

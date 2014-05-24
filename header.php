@@ -19,6 +19,7 @@
         else if($_SESSION['user_type'] == 1) {
       ?>
       <li><a href="<?php echo $ROOT_URL . 'doctor_schedule.php'; ?>">Schedule</a></li>
+      <li><a href="<?php echo $ROOT_URL . 'doctor_picture.php'; ?>">Add Profile Picture</a></li>
       <?php 
         }
       }

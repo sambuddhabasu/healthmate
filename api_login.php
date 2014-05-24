@@ -38,6 +38,9 @@ for ($i=0; $i<$count_doctor; $i++) {
 			$_SESSION['category_present'] = 1;
 			$_SESSION['category'] = $doctorResponse->results[$i]->category;
 		}
+		if(isset($doctorResponse->results[$i]->link)) {
+			$_SESSION['link'] = $doctorResponse->results[$i]->link;
+		}
 		break;
 	}
 }

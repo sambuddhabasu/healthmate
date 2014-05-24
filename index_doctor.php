@@ -59,10 +59,19 @@ else {
 <div class="row">
 <div class="col-md-3"></div>
 <div class="col-md-6">
-<p>Completed your profile</p>
+<p>Hello There</p>
 </div>
 <div class="col-md-3"></div>
 </div>
+
+<div class="row">
+<div class="col-md-3"></div>
+<div class="col-md-6">
+<img src="<?php echo $_SESSION['link']; ?>">
+</div>
+<div class="col-md-3"></div>
+</div>
+
 <?php
 }
 ?>
