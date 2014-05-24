@@ -22,6 +22,16 @@ require_once('header.php');
 <head>
 <title><?php echo $APP_NAME; ?></title>
 <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" media="screen" />
+<link href='static/fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='static/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<style>
+
+	#calendar {
+		width: 900px;
+		margin: 0 auto;
+		}
+
+</style>
 </head>
 <body>
 	<div class="row">
@@ -45,5 +55,79 @@ require_once('header.php');
 		</div>
 		<div class="col-md-3"></div>
 	</div>
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<h2>Book Appointments</h2>
+		</div>
+		<div class="col-md-4"></div>
+	</div><br>
+	<div id="calendar"></div>
+
+<script src='static/lib/jquery.min.js'></script>
+<script src='static/lib/jquery-ui.custom.min.js'></script>
+<script src='static/fullcalendar/fullcalendar.min.js'></script>
+<script>
+
+var xhr = new XMLHttpRequest();
+	xhr.open("GET", "<?php echo $ROOT_URL; ?>" + "api_get_doctor_schedule.php?id=" + "<?php echo $_GET['id']; ?>", true);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4) {
+			var response = xhr.responseText;
+			response = JSON.parse(response);
+			response.start = new Date(response.year, response.month, response.day, response.hour, response.minute);
+			console.log(response);
+
+
+			var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		
+		var calendar = $('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			selectable: true,
+			selectHelper: true,
+			select: function(start, end, allDay) {
+				var reason = prompt('Enter Reason:');
+					calendar.fullCalendar('renderEvent',
+						{
+							title: reason,
+							start: start,
+							allDay: allDay
+						},
+						true // make the event "stick"
+					);
+				calendar.fullCalendar('unselect');
+				var year = start.getFullYear();
+				var month = start.getMonth();
+				var day = start.getDate();
+				var start = year.toString() + "-" +  month.toString() + "-" + day.toString();
+				console.log(start);
+				var check = new XMLHttpRequest();
+				check.open("GET", "<?php echo $ROOT_URL; ?>" + "api_post_doctor_schedule.php?id=" + "<?php echo $_GET['id']; ?>&date=" + start + "&reason=" + reason, true);
+				check.onreadystatechange = function() {
+					if (check.readyState == 4) {
+						window.location.href = "<?php echo $ROOT_URL; ?>" + "index_patient.php";
+					}
+				}
+				check.send();
+			},
+			editable: false,
+			events: [
+			]
+		});
+
+			}
+		}
+		xhr.send();
+
+
+</script>
+
 </body>
 </html>

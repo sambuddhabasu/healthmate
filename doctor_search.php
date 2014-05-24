@@ -36,16 +36,6 @@ require_once('header.php');
 </div>
 <div class="row">
 	<div class="col-md-3"></div>
-	<div class="col-md-2">
-		<h4>available at</h4>
-	</div>
-	<div class="col-md-4">
-		<input type="text" class="form-control" id="free" name="free">
-	</div>
-	<div class="col-md-3"></div>
-</div>
-<div class="row">
-	<div class="col-md-3"></div>
 	<div class="col-md-3">
 		<button type="button" class="btn btn-primary" onClick="search();">Search</button>
 	</div>
@@ -77,9 +67,8 @@ function search() {
 	document.getElementById('loading').width = "50";
 	var near = document.getElementById('near').value;
 	var category = document.getElementById('category').value;
-	var free = document.getElementById('free').value;
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "<?php echo $ROOT_URL; ?>" + "api_doctor_search.php?near=" + near + "&category=" + category + "&free=" + free, true);
+	xhr.open("GET", "<?php echo $ROOT_URL; ?>" + "api_doctor_search.php?near=" + near + "&category=" + category, true);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4) {
 			document.getElementById('loading').src = "";

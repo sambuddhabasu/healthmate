@@ -16,6 +16,11 @@
       <li><a href="<?php echo $ROOT_URL . 'doctor_search.php'; ?>">Search</a></li>
       <?php
         }
+        else if($_SESSION['user_type'] == 1) {
+      ?>
+      <li><a href="<?php echo $ROOT_URL . 'doctor_schedule.php'; ?>">Schedule</a></li>
+      <?php 
+        }
       }
       ?>
       <li><a href="#">Contact Us</a></li>
