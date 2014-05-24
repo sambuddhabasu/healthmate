@@ -31,31 +31,38 @@ require_once('header.php');
 <script>
 
 var xhr = new XMLHttpRequest();
-	xhr.open("GET", "<?php echo $ROOT_URL; ?>" + "api_get_doctor_schedule.php?" + "<?php echo $_SESSION['object_id']; ?>", true);
+	xhr.open("GET", "<?php echo $ROOT_URL; ?>" + "api_get_doctor_schedule.php?id=" + "<?php echo $_SESSION['object_id']; ?>", true);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4) {
 			var response = xhr.responseText;
 			response = JSON.parse(response);
-			response.start = new Date(response.year, response.month, response.day, response.hour, response.minute);
 			console.log(response);
-			var date = new Date();
-			var d = date.getDate();
-			var m = date.getMonth();
-			var y = date.getFullYear();
+
+			for(i=0;i<response.length;i++) {
+				var date = response[i].date;
+				date = date.split('-');
+				response[i].start = new Date(date[0], date[1], date[2]);
+				response[i].title = response[i].reason;
+			}
+
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
 		
-			var calendar = $('#calendar').fullCalendar({
-				header: {
-					left: 'prev,next today',
-					center: 'title',
-					right: 'month,agendaWeek,agendaDay'
-				},
-				selectable: false,
-				selectHelper: true,
-				editable: false,
-				events: [
-					response
-				]
-			});
+		var calendar = $('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			selectable: false,
+			selectHelper: true,
+			editable: false,
+			events: response
+		});
+
+
 			}
 		}
 		xhr.send();

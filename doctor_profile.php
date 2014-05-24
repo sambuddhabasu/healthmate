@@ -73,11 +73,17 @@ var xhr = new XMLHttpRequest();
 	xhr.open("GET", "<?php echo $ROOT_URL; ?>" + "api_get_doctor_schedule.php?id=" + "<?php echo $_GET['id']; ?>", true);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4) {
+
 			var response = xhr.responseText;
 			response = JSON.parse(response);
-			response.start = new Date(response.year, response.month, response.day, response.hour, response.minute);
 			console.log(response);
 
+			for(i=0;i<response.length;i++) {
+				var date = response[i].date;
+				date = date.split('-');
+				response[i].start = new Date(date[0], date[1], date[2]);
+				response[i].title = "Busy";
+			}
 
 			var date = new Date();
 		var d = date.getDate();
@@ -118,8 +124,7 @@ var xhr = new XMLHttpRequest();
 				check.send();
 			},
 			editable: false,
-			events: [
-			]
+			events: response
 		});
 
 			}
